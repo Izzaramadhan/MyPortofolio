@@ -1,43 +1,34 @@
 <script setup>
 defineProps({
-  title: String,
-  color: { type: String, default: '' },
-  align: { type: String, default: 'center' }, // 'left' | 'center' | 'right'
-});
+  title: {
+    type: String,
+    required: true
+  }
+})
 </script>
 
 <template>
-  <div :class="`mb-12 text-${align}`">
-    <h2
-      class="text-3xl sm:text-4xl font-extrabold text-gray-800 dark:text-white transition-colors duration-300"
-      :class="color"
-    >
+  <div class="text-center animate-fade-in-up">
+    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
       {{ title }}
     </h2>
-    <div
-      class="mt-3 h-1 w-24 mx-auto rounded bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
-      :class="{
-        'mx-auto': align === 'center',
-        'ml-0': align === 'left',
-        'mr-0': align === 'right'
-      }"
-    ></div>
+    <div class="mt-2 w-16 h-1 mx-auto bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full animate-pulse"></div>
   </div>
 </template>
 
 <style scoped>
-/* Optional: animasi garis bawah saat muncul */
-div > .h-1 {
-  animation: grow-bar 0.6s ease-out forwards;
-}
-@keyframes grow-bar {
-  from {
-    width: 0;
+@keyframes fade-in-up {
+  0% {
     opacity: 0;
+    transform: translateY(20px);
   }
-  to {
-    width: 6rem; /* 24 Tailwind = 6rem */
+  100% {
     opacity: 1;
+    transform: translateY(0);
   }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.7s ease-out both;
 }
 </style>
