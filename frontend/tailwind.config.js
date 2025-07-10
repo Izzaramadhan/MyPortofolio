@@ -1,9 +1,13 @@
+import forms from '@tailwindcss/forms'
+import typography from '@tailwindcss/typography'
+import lineClamp from '@tailwindcss/line-clamp'
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'class', // ✅ untuk toggle dark mode manual via class
+  darkMode: 'class',
   content: [
     "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}", // Memindai semua file relevan
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -28,5 +32,9 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    forms,
+    typography,
+    lineClamp,
+  ],
 };

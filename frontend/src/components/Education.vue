@@ -5,28 +5,10 @@ import SectionTitle from './SectionTitle.vue'
 
 const educationHistory = ref([])
 const isLoading = ref(true)
-const visibleItems = ref([])
 
 function handleImageError(event) {
-  event.target.src = '/default-school.png'
+  event.target.src = 'https://via.placeholder.com/56x56.webp?text=School'
 }
-
-function observeVisibility(index) {
-  return (el) => {
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          visibleItems.value[index] = true
-          observer.unobserve(el)
-        }
-      },
-      { threshold: 0.3 }
-    )
-    observer.observe(el)
-  }
-}
-
 onMounted(async () => {
   try {
     const response = await axios.get('http://localhost:3000/api/education')
@@ -42,16 +24,22 @@ onMounted(async () => {
 <template>
   <section
     id="pendidikan"
+    v-intersect="'animate-fade-in-up'"
     class="py-24 bg-gray-50 dark:bg-gray-900 transition-colors duration-500 scroll-mt-28"
     aria-labelledby="pendidikan-title"
   >
     <SectionTitle title="Pendidikan" id="pendidikan-title" />
 
-    <div class="max-w-3xl mx-auto mt-12 relative border-l-4 border-blue-300 dark:border-blue-500 pl-6">
+    <div class="relative max-w-3xl mx-auto mt-12 border-l-4 border-blue-300 dark:border-blue-500 pl-6">
+      <!-- Garis glowing -->
+      <div class="absolute w-1 bg-gradient-to-b from-blue-400 to-purple-500 left-[-2px] top-0 h-full rounded-full blur-sm"></div>
+
       <!-- Loading -->
       <div
         v-if="isLoading"
         class="text-center py-12 text-gray-500 dark:text-gray-400 flex justify-center items-center"
+        role="status"
+        aria-live="polite"
       >
         <svg class="animate-spin w-6 h-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
@@ -70,13 +58,12 @@ onMounted(async () => {
       </div>
 
       <!-- Timeline -->
-      <ul v-else class="space-y-12">
+      <ul v-else class="space-y-12" role="list" aria-label="Riwayat pendidikan">
         <li
-          v-for="(item, index) in educationHistory"
+          v-for="item in educationHistory"
           :key="item.id"
-          class="relative group opacity-0 transform translate-y-8 transition-all duration-700"
-          :class="{ 'opacity-100 translate-y-0': visibleItems[index] }"
-          :ref="observeVisibility(index)"
+          v-intersect="'animate-fade-in-up'"
+          class="relative group opacity-0 translate-y-8 transition-opacity transition-transform duration-700"
         >
           <!-- Titik timeline -->
           <span
@@ -91,9 +78,10 @@ onMounted(async () => {
               <!-- Logo -->
               <img
                 :src="item.image"
+                loading="lazy"
                 @error="handleImageError"
-                alt="Logo institusi {{ item.institution }}"
-                class="w-14 h-14 rounded-full object-contain ring-2 ring-blue-300 dark:ring-blue-500 shrink-0"
+                :alt="`Logo institusi ${item.institution}`"
+                class="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-contain ring-2 ring-blue-300 dark:ring-blue-500 shrink-0"
               />
 
               <!-- Info -->

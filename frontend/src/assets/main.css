@@ -2,56 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Animasi scroll reveal */
+/* ================================
+   SCROLL ANIMATION CLASSES
+================================ */
+
+/* State Awal (sembunyi) */
 .scroll-hidden {
   opacity: 0;
-  transform: translateY(50px);
   transition:
     opacity 0.8s ease-out,
     transform 0.8s ease-out;
 }
 
+/* State Muncul (umum) */
 .scroll-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate(0, 0);
 }
 
-/* posisi awal */
-.scroll-hidden {
-  opacity: 0;
-  transition:
-    opacity 0.8s ease-out,
-    transform 0.8s ease-out;
+/* Fade dari BAWAH ke ATAS */
+.scroll-hidden-up {
+  transform: translateY(50px);
 }
-
-/* posisi akhir default (fade-up) */
 .scroll-visible-up {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* posisi awal untuk fade-up */
-.scroll-hidden-up {
-  transform: translateY(50px);
-}
-
-/* posisi awal untuk fade-down */
+/* Fade dari ATAS ke BAWAH */
 .scroll-hidden-down {
   transform: translateY(-50px);
 }
+.scroll-visible-down {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-/* posisi awal untuk fade-left */
+/* Fade dari KIRI ke KANAN */
 .scroll-hidden-left {
   transform: translateX(-50px);
 }
+.scroll-visible-left {
+  opacity: 1;
+  transform: translateX(0);
+}
 
-/* posisi awal untuk fade-right */
+/* Fade dari KANAN ke KIRI */
 .scroll-hidden-right {
   transform: translateX(50px);
 }
-
-/* posisi akhir sama (opacity 1, no transform) */
-.scroll-visible {
+.scroll-visible-right {
   opacity: 1;
-  transform: translate(0,0);
+  transform: translateX(0);
+}
+
+/* ================================
+   CUSTOM KEYFRAME ANIMATIONS
+================================ */
+
+/* Keyframe: Fade in + slide up */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
 }

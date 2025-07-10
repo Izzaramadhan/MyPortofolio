@@ -12,12 +12,13 @@
       <!-- Logo -->
       <a href="#" class="flex items-center space-x-3 group">
         <img
-          src="/Logo.png"
+          src="/Logo.webp"
           alt="Logo"
+          loading="lazy"
           class="h-10 w-10 sm:h-12 sm:w-12 object-contain rounded-full shadow-md
                  group-hover:scale-110 transition-transform duration-300
                  dark:shadow-[0_0_10px_rgba(59,130,246,0.6)]"
-          onerror="this.src='fallback-logo.png'"
+          onerror="this.src='/fallback-logo.webp'"
         />
         <span
           class="hidden sm:inline text-lg font-semibold text-gray-800 dark:text-gray-200
@@ -27,10 +28,9 @@
         </span>
       </a>
 
-      <!-- Mobile -->
+      <!-- Mobile Toggle -->
       <div class="md:hidden flex items-center gap-4">
         <DarkModeToggle :is-dark="isDark" @toggle="toggleDarkMode" />
-
         <button
           @click="toggleMenu"
           :aria-expanded="menuOpen.toString()"
@@ -131,7 +131,6 @@ function toggleDarkMode() {
   localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
 }
 
-// ✅ Perbaikan scroll spy dengan getBoundingClientRect dan buffer
 function handleScroll() {
   scrolled.value = window.scrollY > 20
 

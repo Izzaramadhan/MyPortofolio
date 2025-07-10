@@ -5,6 +5,23 @@ import SectionTitle from './SectionTitle.vue'
 
 const projects = ref([])
 const isLoading = ref(true)
+const visibleItems = ref([])
+
+function observeVisibility(index) {
+  return (el) => {
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          visibleItems.value[index] = true
+          observer.unobserve(el)
+        }
+      },
+      { threshold: 0.3 }
+    )
+    observer.observe(el)
+  }
+}
 
 onMounted(async () => {
   try {
@@ -36,7 +53,7 @@ onMounted(async () => {
         Tidak ada proyek yang tersedia.
       </div>
 
-      <!-- Card Grid -->
+      <!-- Grid Proyek -->
       <div
         v-else
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
@@ -44,14 +61,18 @@ onMounted(async () => {
         <div
           v-for="(project, index) in projects"
           :key="index"
-          class="group bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-1 duration-300 flex flex-col"
+          :ref="observeVisibility(index)"
+          class="group bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all transform duration-700 opacity-0 translate-y-8"
+          :class="{ 'opacity-100 translate-y-0': visibleItems[index] }"
         >
           <!-- Gambar -->
           <div class="h-56 overflow-hidden">
             <img
               :src="project.image"
+              loading="lazy"
               :alt="project.title"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              @error="(e) => e.target.src = 'https://via.placeholder.com/600x400?text=Project'"
             />
           </div>
 
@@ -82,6 +103,7 @@ onMounted(async () => {
             <a
               :href="project.link"
               target="_blank"
+              rel="noopener noreferrer"
               class="inline-block text-blue-600 dark:text-blue-400 hover:underline hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors mt-auto"
             >
               🔗 Lihat Proyek
@@ -92,3 +114,19 @@ onMounted(async () => {
     </div>
   </section>
 </template>
+
+<style scoped>
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.8s ease-out both;
+}
+</style>
