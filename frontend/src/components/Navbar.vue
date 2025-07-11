@@ -1,6 +1,9 @@
 <template>
   <!-- Scroll progress bar -->
-  <div v-if="scrolled" class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 z-[60]"></div>
+  <div
+    v-if="scrolled"
+    class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 z-[60]"
+  ></div>
 
   <header
     :class="[
@@ -15,31 +18,28 @@
           src="/Logo.webp"
           alt="Logo"
           loading="lazy"
-          class="h-10 w-10 sm:h-12 sm:w-12 object-contain rounded-full shadow-md
-                 group-hover:scale-110 transition-transform duration-300
-                 dark:shadow-[0_0_10px_rgba(59,130,246,0.6)]"
+          class="h-10 w-10 sm:h-12 sm:w-12 object-contain rounded-full shadow-md group-hover:scale-110 transition-transform duration-300 dark:shadow-[0_0_10px_rgba(59,130,246,0.6)]"
           onerror="this.src='/fallback-logo.webp'"
         />
         <span
-          class="hidden sm:inline text-lg font-semibold text-gray-800 dark:text-gray-200
-                 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300"
+          class="hidden sm:inline text-lg font-semibold text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300"
         >
           BRODIN
         </span>
       </a>
 
       <!-- Mobile Toggle -->
-      <div class="md:hidden flex items-center gap-4">
-        <DarkModeToggle :is-dark="isDark" @toggle="toggleDarkMode" />
+      <div class="md:hidden flex items-center gap-4 z-50">
         <button
           @click="toggleMenu"
           :aria-expanded="menuOpen.toString()"
           aria-controls="mobile-menu"
           aria-label="Menu"
+          class="text-gray-800 dark:text-white p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
         >
           <svg
             :class="menuOpen ? 'rotate-90 scale-110 transition-transform' : ''"
-            class="w-6 h-6 text-gray-800 dark:text-white"
+            class="w-6 h-6"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -52,6 +52,7 @@
             />
           </svg>
         </button>
+        <DarkModeToggle :is-dark="isDark" @toggle="toggleDarkMode" />
       </div>
 
       <!-- Desktop Menu -->
