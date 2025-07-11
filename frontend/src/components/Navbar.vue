@@ -1,113 +1,128 @@
 <template>
-  <!-- Scroll progress bar -->
-  <div
-    v-if="scrolled"
-    class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 z-[60]"
-  ></div>
-
-  <header
-    :class="[
-      'fixed w-full z-50 transition-all duration-300 backdrop-blur-md',
-      scrolled ? 'bg-white/90 dark:bg-gray-900/90 shadow-md' : 'bg-transparent'
-    ]"
-  >
-    <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <!-- Logo -->
-      <a href="#" class="flex items-center space-x-3 group">
-        <img
-          src="/Logo.webp"
-          alt="Logo"
-          loading="lazy"
-          class="h-10 w-10 sm:h-12 sm:w-12 object-contain rounded-full shadow-md group-hover:scale-110 transition-transform duration-300 dark:shadow-[0_0_10px_rgba(59,130,246,0.6)]"
-          onerror="this.src='/fallback-logo.webp'"
-        />
-        <span
-          class="hidden sm:inline text-lg font-semibold text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300"
-        >
-          BRODIN
-        </span>
-      </a>
-
-      <!-- Mobile Toggle -->
-      <div class="md:hidden flex items-center gap-4 z-50">
-        <button
-          @click="toggleMenu"
-          :aria-expanded="menuOpen.toString()"
-          aria-controls="mobile-menu"
-          aria-label="Menu"
-          class="text-gray-800 dark:text-white p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-        >
-          <svg
-            :class="menuOpen ? 'rotate-90 scale-110 transition-transform' : ''"
-            class="w-6 h-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              :d="menuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'"
-            />
-          </svg>
-        </button>
-        <DarkModeToggle :is-dark="isDark" @toggle="toggleDarkMode" />
-      </div>
-
-      <!-- Desktop Menu -->
-      <ul class="hidden md:flex items-center gap-8 font-medium">
-        <li v-for="item in navItems" :key="item.id">
-          <a
-            :href="'#' + item.id"
-            @click.prevent="scrollTo(item.id)"
-            :class="[
-              'relative nav-item transition-all duration-300',
-              activeSection === item.id ? 'active' : ''
-            ]"
-          >
-            {{ item.label }}
-          </a>
-        </li>
-        <li>
-          <DarkModeToggle :is-dark="isDark" @toggle="toggleDarkMode" />
-        </li>
-      </ul>
-    </nav>
-
-    <!-- Mobile Menu -->
+  <div>
+    <!-- Overlay saat mobile menu terbuka -->
     <transition name="fade">
       <div
         v-if="menuOpen"
-        id="mobile-menu"
-        class="md:hidden px-6 pb-4"
-        ref="mobileMenu"
-      >
-        <ul class="flex flex-col space-y-4 text-gray-700 dark:text-gray-200">
+        class="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 md:hidden"
+        @click="toggleMenu"
+      ></div>
+    </transition>
+
+    <!-- Navbar -->
+    <header
+      :class="[
+        'fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-md',
+        scrolled ? 'bg-white/90 dark:bg-gray-900/90 shadow-md' : 'bg-transparent'
+      ]"
+    >
+      <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <!-- Logo + Text -->
+        <a
+          href="#"
+          class="flex items-center gap-2 text-xl sm:text-2xl font-extrabold tracking-tight"
+        >
+          <img
+            src="/Logo.webp"
+            alt="Logo"
+            class="w-8 h-8 sm:w-10 sm:h-10 object-contain"
+          />
+          <span class="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+            BRODIN
+          </span>
+        </a>
+
+        <!-- Mobile Toggle -->
+        <div class="md:hidden flex items-center gap-4 z-50">
+          <button
+            @click="toggleDarkMode"
+            aria-label="Toggle Dark Mode"
+            class="text-gray-700 dark:text-gray-200 text-xl"
+          >
+            <span v-if="isDark">☀</span>
+            <span v-else>🌙</span>
+          </button>
+          <button @click="toggleMenu" aria-label="Toggle Menu">
+            <svg
+              :class="[
+                'w-7 h-7 transition-transform duration-300',
+                menuOpen ? 'rotate-90 scale-110' : ''
+              ]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              class="text-gray-800 dark:text-white"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                :d="menuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <ul class="hidden md:flex items-center gap-8 font-medium">
           <li v-for="item in navItems" :key="item.id">
             <a
               :href="'#' + item.id"
-              @click.prevent="scrollTo(item.id); toggleMenu()"
-              :class="activeSection === item.id ? 'text-blue-500 font-semibold' : ''"
+              @click.prevent="scrollTo(item.id)"
+              :class="[
+                'relative nav-item transition-all duration-300',
+                activeSection === item.id ? 'active' : ''
+              ]"
             >
               {{ item.label }}
             </a>
           </li>
+          <li>
+            <button
+              @click="toggleDarkMode"
+              aria-label="Toggle Dark Mode"
+              class="text-gray-700 dark:text-gray-200 text-xl"
+            >
+              <span v-if="isDark">☀</span>
+              <span v-else>🌙</span>
+            </button>
+          </li>
         </ul>
-      </div>
-    </transition>
-  </header>
+      </nav>
+
+      <!-- Mobile Menu -->
+      <transition name="fade">
+        <div
+          v-if="menuOpen"
+          class="md:hidden px-6 pb-6 pt-4 bg-white dark:bg-gray-900 shadow-md rounded-b-lg z-50"
+        >
+          <ul class="flex flex-col space-y-4 text-gray-800 dark:text-gray-200">
+            <li v-for="item in navItems" :key="item.id">
+              <a
+                :href="'#' + item.id"
+                @click.prevent="scrollTo(item.id); toggleMenu()"
+                :class="[
+                  'block text-lg transition-all duration-200',
+                  activeSection === item.id ? 'text-blue-500 font-semibold' : ''
+                ]"
+              >
+                {{ item.label }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </transition>
+    </header>
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
-import DarkModeToggle from './DarkModeToggle.vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 const menuOpen = ref(false)
 const isDark = ref(false)
 const scrolled = ref(false)
 const activeSection = ref('')
-const mobileMenu = ref(null)
 
 const navItems = [
   { id: 'profil', label: 'Profil' },
@@ -121,46 +136,36 @@ function toggleMenu() {
   menuOpen.value = !menuOpen.value
 }
 
-function scrollTo(id) {
-  const section = document.getElementById(id)
-  if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
-
 function toggleDarkMode() {
   isDark.value = !isDark.value
   document.documentElement.classList.toggle('dark', isDark.value)
   localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
 }
 
+function scrollTo(id) {
+  const section = document.getElementById(id)
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+}
+
 function handleScroll() {
   scrolled.value = window.scrollY > 20
-
-  const buffer = window.innerHeight / 3
-  let currentSection = ''
-
+  let found = false
   for (const item of navItems) {
-    const section = document.getElementById(item.id)
-    if (section) {
-      const rect = section.getBoundingClientRect()
-      if (rect.top <= buffer && rect.bottom > buffer) {
-        currentSection = item.id
+    const sec = document.getElementById(item.id)
+    if (sec) {
+      const rect = sec.getBoundingClientRect()
+      const offset = 120
+      if (rect.top <= offset && rect.bottom >= offset) {
+        activeSection.value = item.id
+        found = true
         break
       }
     }
   }
-
-  activeSection.value = currentSection
+  if (!found) activeSection.value = ''
 }
-
-function handleClickOutside(event) {
-  if (menuOpen.value && mobileMenu.value && !mobileMenu.value.contains(event.target)) {
-    menuOpen.value = false
-  }
-}
-
-watch(menuOpen, (val) => {
-  document.body.style.overflow = val ? 'hidden' : ''
-})
 
 onMounted(() => {
   const theme = localStorage.getItem('theme')
@@ -170,13 +175,11 @@ onMounted(() => {
   }
 
   window.addEventListener('scroll', handleScroll)
-  document.addEventListener('click', handleClickOutside)
   handleScroll()
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
-  document.removeEventListener('click', handleClickOutside)
 })
 </script>
 

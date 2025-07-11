@@ -1,24 +1,29 @@
-// backend/index.js
 const express = require('express');
 const cors = require('cors');
 const { educationHistory, skills, projects } = require('./data');
 
 const app = express();
-const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// route root untuk menghindari error Cannot GET /
+// Root
 app.get('/', (req, res) => {
   res.send('Backend API is running!');
 });
 
-// Definisikan API endpoints
+// API routes
 app.get('/api/education', (req, res) => res.json(educationHistory));
 app.get('/api/skills', (req, res) => res.json(skills));
 app.get('/api/projects', (req, res) => res.json(projects));
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server backend berjalan di http://localhost:3000`);
-});
+// ✅ Ini hanya jalan kalau di mode lokal (bukan di Vercel)
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server backend berjalan di http://localhost:${PORT}`);
+  });
+}
+
+// ✅ Ekspor app untuk Vercel
+module.exports = app;
