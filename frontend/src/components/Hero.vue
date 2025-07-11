@@ -5,7 +5,7 @@ import { ref, onMounted } from 'vue'
 const myPhoto = '/pp.webp'
 
 // Teks berjalan
-const roles = ['Frontend Developer', 'UI/UX Enthusiast', 'Web Designer', 'Backend Developer']
+const roles = ['Frontend Developer', 'UI/UX Enthusiast', 'Web Designer', 'Backend Developer', 'Software Engineer']
 const currentTitle = ref('')
 let titleIndex = 0
 let charIndex = 0

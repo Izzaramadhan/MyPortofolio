@@ -79,16 +79,19 @@ function submitForm() {
           </p>
           <p class="mb-2 flex justify-center md:justify-start items-center gap-2 text-gray-700 dark:text-gray-300">
             <Mail class="w-5 h-5 animate-bounce" />
-            <a href="mailto:izzuddinramadhan84@gmail.com" class="hover:text-blue-500 dark:hover:text-blue-300 transition-colors">
+            <a
+              href="mailto:izzuddinramadhan84@gmail.com"
+              class="hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
+            >
               izzuddinramadhan84@gmail.com
             </a>
           </p>
         </div>
 
         <!-- Sosial Media -->
-        <div>
+        <div class="flex flex-col items-center">
           <h3 class="text-xl font-semibold mb-4">Sosial Media</h3>
-          <div class="flex justify-center md:justify-start gap-6">
+          <div class="flex justify-center gap-6">
             <a
               href="https://github.com/Izzaramadhan"
               target="_blank"
@@ -117,12 +120,13 @@ function submitForm() {
         <div>
           <h3 class="text-xl font-semibold mb-4">Tentang Saya</h3>
           <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-            Saya Izzuddin Akmal Daffani Ramadhan (NIM 23.11.5483), mahasiswa Informatika dari Universitas Amikom Yogyakarta. Saya antusias dalam pengembangan web dan desain antarmuka yang interaktif untuk pengalaman pengguna yang optimal.
+            Saya Izzuddin Akmal Daffani Ramadhan (NIM 23.11.5483), mahasiswa Informatika dari Universitas Amikom Yogyakarta.
+            Saya antusias dalam pengembangan web dan desain antarmuka yang interaktif untuk pengalaman pengguna yang optimal.
           </p>
         </div>
       </div>
 
-      <!-- Footer -->
+      <!-- Copyright -->
       <div class="mt-12 border-t border-gray-300 dark:border-gray-700 pt-6 text-center text-xs text-gray-500 dark:text-gray-400">
         &copy; 2025 Izzuddin Akmal. All rights reserved.
       </div>
