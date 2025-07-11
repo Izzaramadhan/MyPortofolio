@@ -24,8 +24,8 @@ const skills = [
 
 
 const projects = [
-  { title: 'Mas Gondrong Rent', image: '/Sewa.webp', description: 'Platform website untuk sewa kendaraan area Jogja.', tech: ['Vue.js', 'CI4', 'Mysql', 'Bootstrap'], link: '#' },
-  { title: 'Portofolio', image: '/Portofolio.webp', description: 'Platform website untuk portofolio pribadi.', tech: ['Vue.js', 'Tailwind', 'Express.js', 'Vercel Postgres'], link: '#' },
+  { title: 'Mas Gondrong Rent', image: '/Sewa.webp', description: 'Platform website untuk sewa kendaraan area Jogja.', tech: ['Vue.js', 'Laravel', 'Mysql', 'Bootstrap'], link: 'https://github.com/Izzaramadhan/FP-MasGondrong' },
+  { title: 'Portofolio', image: '/Portofolio.webp', description: 'Platform website untuk portofolio pribadi.', tech: ['Vue.js', 'Tailwind', 'Express.js', 'Vercel Postgres'], link: 'https://github.com/Izzaramadhan/MyPortofolio' },
   { title: 'PetsCare', image: '/PetsCare.webp', description: 'Desain aplikasi mobile untuk membantu merawat hewan peliharaan.', tech: ['Figma'], link: 'https://www.figma.com/design/q0zNOOANLNzddP0FHhcVhZ/PetsCare?node-id=5-2&t=5AvjxSoynNhTrTNp-1' },
   { title: 'KostNow', image: '/KostNow.webp', description: 'Desain aplikasi mobile untuk membantu mencari kost atau apartemen.', tech: ['Figma'], link: 'https://www.figma.com/design/58WKSPOYyYIQSYwXP5DCj6/IMK-PROJECT?node-id=0-1&t=iZEAmvIgm9a0Denw-1' }
 ];
