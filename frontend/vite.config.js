@@ -7,11 +7,14 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 export default defineConfig(({ mode }) => ({
   plugins: [
     vue(),
-    mode === 'development' && vueDevTools(), // ⛔ hanya aktif saat dev
+    mode === 'development' && vueDevTools(),
   ].filter(Boolean),
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  build: {
+    outDir: 'dist' // ✅ Penting untuk Vercel
+  }
 }))
