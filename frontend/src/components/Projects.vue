@@ -3,25 +3,8 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import SectionTitle from './SectionTitle.vue'
 
-const projects = ref([])
+const projects = ref([]) // <- ref mulai digunakan, warnanya akan berubah
 const isLoading = ref(true)
-const visibleItems = ref([])
-
-function observeVisibility(index) {
-  return (el) => {
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          visibleItems.value[index] = true
-          observer.unobserve(el)
-        }
-      },
-      { threshold: 0.3 }
-    )
-    observer.observe(el)
-  }
-}
 
 onMounted(async () => {
   try {

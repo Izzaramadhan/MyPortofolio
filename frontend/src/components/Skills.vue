@@ -184,15 +184,17 @@ const chartOptions = {
   }
 }
 
+// Add the new API_URL constant
+const API_URL = import.meta.env.PROD ? '/api/skills' : 'http://localhost:3000/api/skills'
+
 onMounted(async () => {
   try {
-    const response = await axios.get('http://localhost:3000/api/skills')
+    const response = await axios.get(API_URL)
     skills.value = response.data
   } catch (error) {
-    console.error('Gagal mengambil data skills:', error)
-  } finally {
-    isLoading.value = false
+    console.error('Gagal mengambil data skill:', error)
   }
+  isLoading.value = false
 })
 </script>
 
